@@ -129,7 +129,8 @@ RUN npm i -g aws-sdk serverless webpack
 ENV PATH="$GOPATH/bin:/usr/local/go/bin:$PATH"
 WORKDIR $GOPATH
 
-RUN go get github.com/aws/aws-lambda-go/lambda && go get github.com/aws/aws-sdk-go/aws
+RUN $GOPATH/bin/go get github.com/aws/aws-lambda-go/lambda
+RUN $GOPATH/bin/go get github.com/aws/aws-sdk-go/aws
 
 CMD [ "node" ]
 ENTRYPOINT ["dockerd-entrypoint.sh"]
