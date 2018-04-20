@@ -39,6 +39,7 @@ Resources:
     Properties: 
       Artifacts:
         Type: "NO_ARTIFACTS"
+      BadgeEnabled: "true"
       Description: "ECR Codebuild Docker"
       Environment:
         ComputeType: "BUILD_GENERAL1_SMALL"
@@ -65,15 +66,9 @@ Resources:
       ServiceRole: 
         Ref: "ECRCodeBuildIam"
       Source:
-        Location:
-          !Join
-            - ""
-            - - !Ref DockerS3
-              - "/DockerGolangNodejsServerless.zip"
-        Type: "S3"
+        Location: "https://bitbucket.org/psychpress/golang-docx-report-serverless"
+        Type: "BITBUCKET"
       Tags:
         - 
           Key: "Name"
           Value: "CA Golang Nodejs Docker"
-  DockerS3:
-    Type: "AWS::S3::Bucket"

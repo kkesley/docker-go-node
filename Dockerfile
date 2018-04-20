@@ -114,7 +114,7 @@ RUN set -ex \
     ; do \
       gpg --keyserver ha.pool.sks-keyservers.net --recv-keys "$key"; \
     done
-    
+
 RUN wget "https://nodejs.org/download/release/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.gz" -O node-v$NODE_VERSION-linux-x64.tar.gz \
 	&& wget "https://nodejs.org/download/release/v$NODE_VERSION/SHASUMS256.txt.asc" -O SHASUMS256.txt.asc \
 	&& gpg --batch --decrypt --output SHASUMS256.txt SHASUMS256.txt.asc \
@@ -126,10 +126,10 @@ RUN wget "https://nodejs.org/download/release/v$NODE_VERSION/node-v$NODE_VERSION
 
 RUN npm i -g aws-sdk serverless webpack
 
-RUN go get github.com/aws/aws-lambda-go/lambda && go get github.com/aws/aws-sdk-go/aws
-
 ENV PATH="$GOPATH/bin:/usr/local/go/bin:$PATH"
 WORKDIR $GOPATH
+
+RUN go get github.com/aws/aws-lambda-go/lambda && go get github.com/aws/aws-sdk-go/aws
 
 CMD [ "node" ]
 ENTRYPOINT ["dockerd-entrypoint.sh"]
