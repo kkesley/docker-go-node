@@ -97,10 +97,10 @@ RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" \
     && tar -xzf /tmp/golang.tar.gz -C /usr/local \
     && rm -fr /var/lib/apt/lists/* /tmp/* /var/tmp/* \
     && wget "https://github.com/golang/dep/releases/download/v$DEP_VERSION/$DEP_BINARY" -O "$GOPATH/bin/dep" \
-    && chmod +x "$GOPATH/bin/dep"
-    && ls /usr/local/bin/
-    && ls $GOPATH/bin
-    && $GOPATH/bin/go get github.com/aws/aws-lambda-go/lambda
+    && chmod +x "$GOPATH/bin/dep" \
+    && ls /usr/local/bin/ \
+    && ls $GOPATH/bin \
+    && $GOPATH/bin/go get github.com/aws/aws-lambda-go/lambda \
     && $GOPATH/bin/go get github.com/aws/aws-sdk-go/aws
 
 ENV NODE_VERSION="7.0.0"
