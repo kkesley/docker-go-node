@@ -1,0 +1,1 @@
+aws codebuild start-build --project-name ca-golang-nodejs-docker
