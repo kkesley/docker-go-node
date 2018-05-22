@@ -127,7 +127,8 @@ RUN wget "https://nodejs.org/download/release/v$NODE_VERSION/node-v$NODE_VERSION
     && rm "node-v$NODE_VERSION-linux-x64.tar.gz" SHASUMS256.txt.asc SHASUMS256.txt \
     && ln -s /usr/local/bin/node /usr/local/bin/nodejs \
     && rm -fr /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
+    
+RUN npm i -g npm
 RUN npm i -g aws-sdk serverless webpack webpack-cli
 
 ENV PATH="$GOPATH/bin:/usr/local/go/bin:$PATH"
