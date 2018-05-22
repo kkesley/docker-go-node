@@ -116,7 +116,7 @@ RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" \
     && /usr/local/go/bin/go get github.com/aws/aws-lambda-go/lambda \
     && /usr/local/go/bin/go get github.com/aws/aws-sdk-go/aws
 
-ENV NODE_VERSION="7.0.0"
+ENV NODE_VERSION="8.11.0"
 
 RUN set -ex \
     && for key in \
@@ -141,7 +141,6 @@ RUN wget "https://nodejs.org/download/release/v$NODE_VERSION/node-v$NODE_VERSION
     && ln -s /usr/local/bin/node /usr/local/bin/nodejs \
     && rm -fr /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN npm i -g npm
 RUN npm i -g aws-sdk serverless webpack webpack-cli
 
 ENV PATH="$GOPATH/bin:/usr/local/go/bin:$PATH"
