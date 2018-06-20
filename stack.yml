@@ -79,7 +79,7 @@ Resources:
             Name: IMAGE_TAG
             Type: PLAINTEXT
             Value: latest
-      Name: "golang-nodejs-docker"
+      Name: "docker-golang-nodejs"
       ServiceRole: 
         Ref: "ECRCodeBuildIam"
       Source:

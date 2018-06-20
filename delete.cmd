@@ -1,1 +1,1 @@
-aws cloudformation delete-stack --stack-name dockering-nodejs-golang
+aws cloudformation delete-stack --stack-name docker-nodejs-golang
