@@ -27,31 +27,19 @@ RUN set -ex \
     && echo 'Acquire::CompressionTypes::Order:: "gz";' > /etc/apt/apt.conf.d/99use-gzip-compression \
     && apt-get update \
     && apt-get install -y --no-install-recommends \
-       wget=1.15-* python=2.7.5-* python2.7-dev=2.7.6-* fakeroot=1.20-* ca-certificates \
-       tar=1.27.1-* gzip=1.6-* zip=3.0-* autoconf=2.69-* automake=1:1.14.1-* \
-       bzip2=1.0.6-* file=1:5.14-* g++=4:4.8.2-* gcc=4:4.8.2-* imagemagick=8:6.7.7.10-* \
-       libbz2-dev=1.0.6-* libc6-dev=2.19-* libcurl4-openssl-dev=7.35.0-* libdb-dev=1:5.3.21~* \
-       libevent-dev=2.0.21-stable-* libffi-dev=3.1~rc1+r3.0.13-* libgeoip-dev=1.6.0-* libglib2.0-dev=2.40.2-* \
-       libjpeg-dev=8c-* libkrb5-dev=1.12+dfsg-* liblzma-dev=5.1.1alpha+20120614-* \
-       libmagickcore-dev=8:6.7.7.10-* libmagickwand-dev=8:6.7.7.10-* libmysqlclient-dev=5.5.60-* \
-       libncurses5-dev=5.9+20140118-* libpng12-dev=1.2.50-* libpq-dev=9.3.22-* libreadline-dev=6.3-* \
-       libsqlite3-dev=3.8.2-* libssl-dev=1.0.1f-* libtool=2.4.2-* libwebp-dev=0.4.0-* \
-       libxml2-dev=2.9.1+dfsg1-* libxslt1-dev=1.1.28-* libyaml-dev=0.1.4-* make=3.81-* \
-       patch=2.7.1-* xz-utils=5.1.1alpha+20120614-* zlib1g-dev=1:1.2.8.dfsg-* unzip=6.0-* curl=7.35.0-* \
-       e2fsprogs=1.42.9-* iptables=1.4.21-* xfsprogs=3.1.9ubuntu2 xz-utils=5.1.1alpha+20120614-* \
-       mono-mcs=3.2.8+dfsg-* \
-    && apt-get install -y -qq less=458-* groff=1.22.2-* \
-    && apt-get -qy build-dep git=1:1.9.1 \
-    && apt-get -qy install libcurl4-openssl-dev=7.35.0-* git-man=1:1.9.1-* liberror-perl=0.17-* \
-    && mkdir -p /usr/src/git-openssl \
-    && cd /usr/src/git-openssl \
-    && apt-get source git=1:1.9.1 \
-    && cd $(find -mindepth 1 -maxdepth 1 -type d -name "git-*") \
-    && sed -i -- 's/libcurl4-gnutls-dev/libcurl4-openssl-dev/' ./debian/control \
-    && sed -i -- '/TEST\s*=\s*test/d' ./debian/rules \
-    && dpkg-buildpackage -rfakeroot -b \
-    && find .. -type f -name "git_*ubuntu*.deb" -exec dpkg -i \{\} \; \
-    && rm -rf /usr/src/git-openssl \
+       wget=1.15-* python=2.7.* python2.7-dev=2.7.* fakeroot=1.20-* ca-certificates \
+       tar=1.27.* gzip=1.6-* zip=3.0-* autoconf=2.69-* automake=1:1.14.* \
+       bzip2=1.0.* file=1:5.14-* g++=4:4.8.* gcc=4:4.8.* imagemagick=8:6.7.* \
+       libbz2-dev=1.0.* libc6-dev=2.19-* libcurl4-openssl-dev=7.35.* libdb-dev=1:5.3.* \
+       libevent-dev=2.0.* libffi-dev=3.1~* libgeoip-dev=1.6.* libglib2.0-dev=2.40.* \
+       libjpeg-dev=8c-* libkrb5-dev=1.12+* liblzma-dev=5.1.* \
+       libmagickcore-dev=8:6.7.* libmagickwand-dev=8:6.7.* libmysqlclient-dev=5.5.* \
+       libncurses5-dev=5.9+* libpng12-dev=1.2.* libpq-dev=9.3.* libreadline-dev=6.3-* \
+       libsqlite3-dev=3.8.* libssl-dev=1.0.* libtool=2.4.* libwebp-dev=0.4.* \
+       libxml2-dev=2.9.* libxslt1-dev=1.1.* libyaml-dev=0.1.* make=3.81-* \
+       patch=2.7.* xz-utils=5.1.* zlib1g-dev=1:1.2.* unzip=6.0-* curl=7.35.* \
+       e2fsprogs=1.42.* iptables=1.4.* xfsprogs=3.1.* xz-utils=5.1.* \
+       mono-mcs=3.2.* less=458-* groff=1.22.* libcurl4-openssl-dev=7.35.* liberror-perl=0.17-*\
     && rm -rf /var/lib/apt/lists/* \
     && apt-get clean
 
@@ -87,7 +75,7 @@ RUN set -ex \
 RUN set -ex \
     && wget "https://bootstrap.pypa.io/2.6/get-pip.py" -O /tmp/get-pip.py \
     && python /tmp/get-pip.py \
-    && pip install awscli \
+    && pip install awscli==1.* \
     && rm -fr /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 VOLUME /var/lib/docker
@@ -100,7 +88,8 @@ ENV GOLANG_VERSION="1.10" \
     DEP_VERSION="0.4.1" \
     DEP_BINARY="dep-linux-amd64"
 
-RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" \
+RUN set -ex \
+    && mkdir -p "$GOPATH/src" "$GOPATH/bin" \
     && chmod -R 777 "$GOPATH" \
     && apt-get update && apt-get install -y --no-install-recommends \
         pkg-config=0.26-* \
@@ -110,37 +99,42 @@ RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" \
     && tar -xzf /tmp/golang.tar.gz -C /usr/local \
     && rm -fr /var/lib/apt/lists/* /tmp/* /var/tmp/* \
     && wget "https://github.com/golang/dep/releases/download/v$DEP_VERSION/$DEP_BINARY" -O "$GOPATH/bin/dep" \
-    && chmod +x "$GOPATH/bin/dep" \
-    && ls /usr/local/go/bin/ \
-    && ls $GOPATH/bin \
-    && /usr/local/go/bin/go get github.com/aws/aws-lambda-go/lambda \
-    && /usr/local/go/bin/go get github.com/aws/aws-sdk-go/aws
+    && chmod +x "$GOPATH/bin/dep"
 
-ENV NODE_VERSION="8.11.0"
+ENV NODE_VERSION="10.1.0"
 
+# gpg keys listed at https://github.com/nodejs/node#release-team
 RUN set -ex \
     && for key in \
-      9554F04D7259F04124DE6B476D5A82AC7E37093B \
       94AE36675C464D64BAFA68DD7434390BDBE9B9C5 \
-      0034A06D9D9B0064CE8ADF6BF1747F4AD2306D93 \
-      FD3A5288F042B6850C66B31F09FE44734EB7990E \
-      71DCFD284A79C3B38668286BC97EC7A07EDE3FC1 \
-      DD8F2338BAE7501E3DD5AC78C273792F7D83545D \
       B9AE9905FFD7803F25714661B63B535A4C206CA9 \
+      77984A986EBC2AA786BC0F66B01FBB92821C587A \
+      56730D5401028683275BD23C23EFEFE93C4CFFFE \
+      71DCFD284A79C3B38668286BC97EC7A07EDE3FC1 \
+      FD3A5288F042B6850C66B31F09FE44734EB7990E \
+      8FCCA13FEF1D0C2E91008E09770F7A9A5AE15600 \
       C4F0DFFF4E8C1A8236409D08E73BC641CC11F4C8 \
+      DD8F2338BAE7501E3DD5AC78C273792F7D83545D \
+      9554F04D7259F04124DE6B476D5A82AC7E37093B \
+      93C7E9E91B49E432C2F75674B0A78B0A6C481CF6 \
+      114F43EE0176B71C7BC219DD50A3051F888C628D \
+      7937DFD2AB06298B2293C3187D33FF9D0246406D \
     ; do \
-      gpg --keyserver ha.pool.sks-keyservers.net --recv-keys "$key"; \
+      gpg --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys "$key" || \
+      gpg --keyserver hkp://ipv4.pool.sks-keyservers.net --recv-keys "$key" || \
+      gpg --keyserver hkp://pgp.mit.edu:80 --recv-keys "$key" ; \
     done
 
-RUN wget "https://nodejs.org/download/release/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.gz" -O node-v$NODE_VERSION-linux-x64.tar.gz \
+RUN set -ex \
+	&& wget "https://nodejs.org/download/release/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.gz" -O node-v$NODE_VERSION-linux-x64.tar.gz \
 	&& wget "https://nodejs.org/download/release/v$NODE_VERSION/SHASUMS256.txt.asc" -O SHASUMS256.txt.asc \
 	&& gpg --batch --decrypt --output SHASUMS256.txt SHASUMS256.txt.asc \
 	&& grep " node-v$NODE_VERSION-linux-x64.tar.gz\$" SHASUMS256.txt | sha256sum -c - \
-    && tar -xzf "node-v$NODE_VERSION-linux-x64.tar.gz" -C /usr/local --strip-components=1 \
-    && rm "node-v$NODE_VERSION-linux-x64.tar.gz" SHASUMS256.txt.asc SHASUMS256.txt \
-    && ln -s /usr/local/bin/node /usr/local/bin/nodejs \
-    && rm -fr /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
+		&& tar -xzf "node-v$NODE_VERSION-linux-x64.tar.gz" -C /usr/local --strip-components=1 \
+		&& rm "node-v$NODE_VERSION-linux-x64.tar.gz" SHASUMS256.txt.asc SHASUMS256.txt \
+		&& ln -s /usr/local/bin/node /usr/local/bin/nodejs \
+		&& rm -fr /var/lib/apt/lists/* /tmp/* /var/tmp/*
+RUN npm set unsafe-perm true
 RUN npm i -g aws-sdk serverless webpack webpack-cli
 
 ENV PATH="$GOPATH/bin:/usr/local/go/bin:$PATH"
