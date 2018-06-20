@@ -13,7 +13,7 @@ Resources:
             Action: "sts:AssumeRole"
       Policies:
         -
-          PolicyName: "ca-api-codebuild-golang"
+          PolicyName: "codebuild-golang-nodejs"
           PolicyDocument: 
             Version: "2012-10-17"
             Statement: 
@@ -29,7 +29,7 @@ Resources:
                   - "logs:*"
                   - "s3:*"
                 Resource: "*"
-      RoleName: "ca-codebuild-docker-ecr"
+      RoleName: "codebuild-docker-ecr"
   ECRRepo:
     Type: "AWS::ECR::Repository"
     Properties: 
@@ -79,7 +79,7 @@ Resources:
             Name: IMAGE_TAG
             Type: PLAINTEXT
             Value: latest
-      Name: "ca-golang-nodejs-docker"
+      Name: "golang-nodejs-docker"
       ServiceRole: 
         Ref: "ECRCodeBuildIam"
       Source:
@@ -88,4 +88,4 @@ Resources:
       Tags:
         - 
           Key: "Name"
-          Value: "CA Golang Nodejs Docker"
+          Value: "Golang Nodejs Docker"
