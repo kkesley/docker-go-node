@@ -83,8 +83,8 @@ Resources:
       ServiceRole: 
         Ref: "ECRCodeBuildIam"
       Source:
-        Location: "https://bitbucket.org/psychpress/docker-codebuild"
-        Type: "BITBUCKET"
+        Location: "https://github.com/kkesley/ecr-golang-nodejs"
+        Type: "GITHUB"
       Tags:
         - 
           Key: "Name"
