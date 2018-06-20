@@ -20,6 +20,15 @@ ENV DOCKER_BUCKET="download.docker.com" \
     DOCKER_COMPOSE_VERSION="1.16.1" \
     GITVERSION_VERSION="3.6.5"
 
+# Install git
+RUN set -ex \
+    && apt-get update \
+    && apt-get install software-properties-common -y --no-install-recommends\
+    && apt-add-repository ppa:git-core/ppa \
+    && apt-get update \
+    && apt-get install git=1:2.17.1* -y --no-install-recommends\
+    && git version
+
 # Building git from source code:
 #   Ubuntu's default git package is built with broken gnutls. Rebuild git with openssl.
 ##########################################################################
