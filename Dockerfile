@@ -108,7 +108,7 @@ ENV GOLANG_VERSION="1.11.3" \
     DEP_BINARY="dep-linux-amd64"
 
 RUN set -ex \
-    && mkdir -p "$GOPATH/src" "$GOPATH/bin" \
+    && mkdir -p "$GOPATH/src" "$GOPATH/bin" "$GOPATH/pkg/mod" \
     && chmod -R 777 "$GOPATH" \
     && apt-get update && apt-get install -y --no-install-recommends \
         pkg-config=0.26-* \
