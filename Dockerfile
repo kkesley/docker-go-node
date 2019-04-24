@@ -153,10 +153,15 @@ RUN set -ex \
 		&& rm -fr /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN npm set unsafe-perm true
-RUN npm i -g aws-sdk serverless webpack webpack-cli
+
+# install serverless and aws-sdk
+RUN npm i -g aws-sdk serverless
 
 ENV PATH="$GOPATH/bin:/usr/local/go/bin:$PATH"
 WORKDIR $GOPATH
+
+# turn on go module
+ENV GO111MODULE="on"
 
 CMD [ "node" ]
 ENTRYPOINT ["dockerd-entrypoint.sh"]
